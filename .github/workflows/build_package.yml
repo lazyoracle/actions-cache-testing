@@ -31,7 +31,6 @@ jobs:
         with:
           packages: pandoc
           version: 1.0
-          execute_install_scripts: true
       - name: Install package and dependencies
         run: |
           pip install -r requirements-dev.txt
