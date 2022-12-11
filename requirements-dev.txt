@@ -35,5 +35,5 @@ pytest
 # tensorflow-probability>=0.12.1
 # testbook
 # toolz
-# tox
+tox
 # wheel
