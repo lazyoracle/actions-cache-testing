@@ -4,7 +4,7 @@ on:
   push:
     branches: ["*"]
     paths-ignore:
-      - "*.md"
+      - "**.md"
   workflow_dispatch:
 
 jobs:
@@ -19,6 +19,12 @@ jobs:
       PYTHON: ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            docs:
+              - 'docs/**'
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
@@ -35,3 +41,7 @@ jobs:
       - name: Test with pytest
         run: |
           pytest -v -x tests/
+      - name: Test docs
+        if: steps.filter.outputs.docs == 'true'
+        run: |
+          pytest -v -x docs/
