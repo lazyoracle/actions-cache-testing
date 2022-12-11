@@ -25,9 +25,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: requirements-dev.txt
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: pandoc
+          version: 1.0
+          execute_install_scripts: true
       - name: Install package and dependencies
         run: |
-          sudo apt-get install pandoc
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
       - name: Test with pytest
