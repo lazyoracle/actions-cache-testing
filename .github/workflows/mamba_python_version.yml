@@ -1,0 +1,32 @@
+name: Mamba on different python version
+
+on:
+    push:
+        branches: [ "*" ]
+    workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -el {0}
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        os: [ubuntu-22.04]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Conda environment with Micromamba
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: environment.yml
+          create-args: >-
+            python=${{ matrix.python-version }}
+            numpy
+          cache-environment: true
+
+      - run: |
+            python --version
+        shell: micromamba-shell {0}

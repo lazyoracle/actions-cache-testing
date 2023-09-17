@@ -1,0 +1,6 @@
+name: test-mamba-version
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - python=3.8
