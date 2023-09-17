@@ -18,10 +18,12 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
+      - run: |
+            sed '/python/d' environment.yml > environment-no-python.yml
       - name: Install Conda environment with Micromamba
         uses: mamba-org/setup-micromamba@v1
         with:
-          environment-file: environment.yml
+          environment-file: environment-no-python.yml
           create-args: >-
             python=${{ matrix.python-version }}
             numpy
